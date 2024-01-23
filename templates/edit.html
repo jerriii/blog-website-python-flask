@@ -1,0 +1,64 @@
+{% extends "admin_layout.html" %}
+{% block body %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{ home_bg_url }}')">
+<div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="site-heading">
+                <h1>Edit Posts</h1>
+                <span class="subheading">You can Edit Posts here</span>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+<div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+        <form id="addEditForm" data-sb-form-api-token="API_TOKEN" action="/edit/{{sno}}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-floating">
+                <input class="form-control" id="title" name="title" type="text" placeholder="Title" value="{{post.title}}" />
+                <label for="title">Title</label>
+                <div class="invalid-feedback" data-sb-feedback="title:required">A title is required.</div>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" id="tagline" name="tagline" type="text" placeholder="Tagline" value="{{post.tagline}}" />
+                <label for="tagline">Tagline</label>
+                <div class="invalid-feedback" data-sb-feedback="tagline:required">A tagline is required.</div>
+            </div>
+            <div class="form-floating">
+                <input class="form-control" id="slug" name="slug" type="text" placeholder="slug" value="{{post.slug}}" />
+                <label for="slug">Slug</label>
+                <div class="invalid-feedback" data-sb-feedback="slug:required">Slug is required.</div>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" id="content" name="content" placeholder="content" style="height: 12rem" >{{post.content}}</textarea>
+                <label for="content">Content</label>
+                <div class="invalid-feedback" data-sb-feedback="message:required">Content is required.</div>
+            </div>
+            <div class="form-floating">
+                <select class="form-select" id="content_type" name="content_type">
+                    <option value="">Select Content Type</option>
+                    {% for  option in content_type_options %}
+                        <option value="{{ option['value'] }}" {% if post and post.content_type == option['value'] %}selected{% endif %}>{{ option['label'] }}</option>
+                    {% endfor %}
+                </select>
+                <label for="content_type">Content Type</label>
+            </div>            
+            <br />
+            <div class="form-floating">
+                <label for="img_file" class="form-label">Image File</label><br>
+                <input class="form-control" id="img_file" name="img_file" type="file" accept=".jpg, .jpeg, .png" />
+            </div>
+            <button class="btn btn-primary text-uppercase " id="sendMessageButton" type="submit">Send</button>
+            <a class="btn btn-primary text-uppercase" href="/cancel">Cancel</a>  
+        </form>
+
+    </div>
+</div>
+</div>
+{% endblock %}

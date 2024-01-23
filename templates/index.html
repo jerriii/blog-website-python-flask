@@ -1,0 +1,67 @@
+{% extends "layout.html" %} {% block body %}
+<!--search-->
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{ home_bg_url }}')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>{{ parameters['blog_name'] }}</h1>
+          <span class="subheading">{{ parameters['tag_line'] }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      {% for post in posts %}
+      <div class="post-preview">
+        <a href="/post/{{ post.slug }}">
+          <h2 class="post-title">{{ post.title }}</h2>
+          <h3 class="post-subtitle">{{post.tagline}}</h3>
+        </a>
+        <p class="post-meta">
+          Posted by {{ usernames.get(post.user_id, 'Unknown') }} on {{ post.date
+          }}
+        </p>
+        {{ post.content[0:120] }}...
+        <div class="ratings">
+          <!-- Display overall rating -->
+          <p>Overall Rating:</p>
+          <div class="rating-stars">
+            {% set integer_stars = post.overall_rating | int %} {% set
+            decimal_part = post.overall_rating - integer_stars %} {% for i in
+            range(integer_stars) %}
+            <i class="fa-solid fa-star"></i>
+            {% endfor %} {% if decimal_part > 0 %}
+            <i class="fa-solid fa-star-half"></i>
+            {% endif %} {{ post.overall_rating }}
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+      {% endfor %}
+
+      <!-- Pager-->
+      <div class="clearfix" style="display: flex">
+        <a
+          class="btn btn-primary text-uppercase"
+          style="margin-right: auto"
+          href="{{prev}}"
+          >&larr; Previous</a
+        >
+        <a
+          class="btn btn-primary text-uppercase"
+          style="margin-left: auto"
+          href="{{next}}"
+          >Next &rarr;</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "layout.html" %} {% block body %}
+<header class="masthead" style="background-image: url('{{ about_bg_url }}')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+          <h1>Add Post</h1>
+          <span class="subheading">{{ parameters['add_user_posts'] }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <form
+        id="addPostForm"
+        class="justify-content-center"
+        data-sb-form-api-token="API_TOKEN"
+        action="{{ url_for('user_post') }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {% set flashed_messages = get_flashed_messages() %} {% if
+        flashed_messages %}
+        <div class="alert alert-info">
+          <ul>
+            {% for message in flashed_messages %}
+            <li style="list-style-type: none">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <h1>User Post</h1>
+        <div class="form-floating">
+          <input
+            class="form-control"
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Title"
+            value="{{ session['post_form_data']['title'] if 'post_form_data' in session else '' }}"
+          />
+          <label for="title">Title</label>
+        </div>
+        <div class="form-floating">
+          <input
+            class="form-control"
+            id="tagline"
+            name="tagline"
+            type="text"
+            placeholder="Tagline"
+            value="{{ session['post_form_data']['tagline'] if 'post_form_data' in session else '' }}"
+          />
+          <label for="tagline">Tagline</label>
+        </div>
+        <div class="form-floating">
+          <input
+            class="form-control"
+            id="slug"
+            name="slug"
+            type="text"
+            placeholder="Slug"
+            value="{{ session['post_form_data']['slug'] if 'post_form_data' in session else '' }}"
+          />
+          <label for="slug">Slug</label>
+        </div>
+        <div class="form-floating">
+          <textarea
+            class="form-control"
+            id="content"
+            name="content"
+            style="height: 12rem"
+            placeholder="Content"
+          >
+{{ session['post_form_data']['content'] if 'post_form_data' in session else '' }}</textarea
+          >
+          <label for="content">Content</label>
+        </div>
+        <div class="form-floating">
+          <select class="form-select" id="content_type" name="content_type">
+            <option value="">Select Content Type</option>
+            {% for option in content_type_options %}
+            <option value="{{ option['value'] }}">{{ option['label'] }}</option>
+            {% endfor %}
+          </select>
+          <label for="content_type">Content Type</label>
+        </div>
+        <div class="form-floating">
+          <input
+            class="form-control"
+            id="img_file"
+            name="img_file"
+            type="file"
+            accept=".jpg, .jpeg, .png"
+            onchange="updateImagePreview(this)"
+          />
+          <label for="img_file">Image File</label>
+          <img
+            id="clickable-image"
+            src="/static/assets/img/default-image.jpg"
+            alt="Image"
+            class="clickable-image"
+            data-toggle="modal"
+            data-target="#modal-image"
+            onclick="previewImage()"
+          />
+        </div>
+
+        <div id="image-modal" class="modal">
+          <span class="close" id="close-modal">&times;</span>
+          <div class="modal-content">
+            <img id="modal-image" src="" alt="Image" />
+          </div>
+        </div>
+
+        <br />
+        <button
+          class="btn btn-primary text-uppercase"
+          id="sendMessageButton"
+          type="submit"
+        >
+          Send
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

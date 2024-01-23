@@ -1,0 +1,36 @@
+{% extends "layout.html" %} {% block body %}
+<header class="masthead" style="background-image: url('{{ home_bg_url }}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>{{ parameters['blog_name'] }}</h1>
+                    <span class="subheading">{{ parameters['tag_line'] }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <h2>What's your preference?</h2>
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <label>Choose one:</label>
+            <br/>
+            {%for option in content_type_options%}
+            <input type="radio" name="content_type" value="{{option['value']}}"/> {{option['label']}} <br/>
+            {%endfor%}
+            <br/>
+            <label for="preferences">Enter your preferences here: (Use comma to separate)</label> <br/>
+            <input type="text" name="preferences" id="preferences" />
+            <br/>
+            <br/>
+            <button type="submit">Complete my profile</button>
+        </form>
+        <br/>
+    </div>
+</div>
+
+{%endblock%}

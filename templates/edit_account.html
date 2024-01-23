@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link href="{{ sign_in }}" rel="stylesheet" />
+
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.3/examples/sign-in/"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+
+    <link href="{{ sign_in }}" rel="stylesheet" />
+  </head>
+  <body class="d-flex align-items-center py-4 bg-body-tertiary">
+    <main class="form-signin w-100 m-auto">
+      <form method="post" action="{{ url_for('edit_account') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+        <h1 class="h3 mb-3 fw-normal">Edit Account</h1>
+        {% set flashed_messages = get_flashed_messages() %} {% if
+        flashed_messages %}
+        <div class="alert alert-info">
+          <ul>
+            {% for message in flashed_messages %}
+            <li style="list-style-type: none">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <div class="form-floating">
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            id="username"
+            value="{{current_user.username}}"
+          />
+          <label for="username">User Name</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="text"
+            name="email"
+            class="form-control"
+            id="email"
+            value="{{current_user.email}}"
+          />
+          <label for="email">Email Address</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="text"
+            name="phone"
+            class="form-control"
+            id="phone"
+            value="{{current_user.phone}}"
+          />
+          <label for="phone">Phone</label>
+        </div>
+        <a href="#" id="changePasswordLink">Change Password</a>
+        <div id="passwordFields" style="display: none">
+          <h2 class="h5 mb-3 fw-normal">Change Password</h2>
+          <div class="form-floating">
+            <input
+              type="password"
+              name="old_password"
+              class="form-control"
+              id="old_password"
+            />
+            <label for="old_password">Old Password</label>
+          </div>
+          <div class="form-floating">
+            <input
+              type="password"
+              name="new_password"
+              class="form-control"
+              id="new_password"
+            />
+            <label for="new_password">New Password</label>
+          </div>
+          <div class="form-floating">
+            <input
+              type="password"
+              name="confirm_password"
+              class="form-control"
+              id="confirm_password"
+            />
+            <label for="confirm_password">Confirm Password</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 py-2">
+          Save Changes
+        </button>
+      </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const phoneInput = document.getElementById("phone");
+
+      phoneInput.addEventListener("input", function (event) {
+        event.target.value = event.target.value.replace(/\D/g, "");
+      });
+
+      const emailInput = document.getElementById("email");
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      emailInput.addEventListener("input", function (event) {
+        const email = event.target.value;
+        const isValid = emailPattern.test(email);
+
+        if (!isValid) {
+          emailInput.setCustomValidity(
+            "Please enter a valid email address (someone@example.com)."
+          );
+        } else {
+          emailInput.setCustomValidity("");
+        }
+      });
+      const usernameInput = document.getElementById("username");
+      usernameInput.addEventListener("input", () => {
+        const inputText = usernameInput.value;
+        if (inputText.length > 0) {
+          usernameInput.value =
+            inputText.charAt(0).toUpperCase() + inputText.slice(1);
+        }
+      });
+
+      document
+        .getElementById("changePasswordLink")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          document.getElementById("passwordFields").style.display = "block";
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+{% extends "admin_layout.html" %} {% block body %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{ home_bg_url }}')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>Approve Posts</h1>
+          <span class="subheading">You can Approve Posts here</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <form method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            value="{{ posts.title }}"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="tagline" class="form-label">Tagline</label>
+          <input
+            type="text"
+            class="form-control"
+            id="tagline"
+            name="tagline"
+            value="{{ posts.tagline }}"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="slug" class="form-label">Slug</label>
+          <input
+            type="text"
+            class="form-control"
+            id="slug"
+            name="slug"
+            value="{{ posts.slug }}"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="content" class="form-label">Content</label>
+          <textarea
+            class="form-control"
+            id="content"
+            name="content"
+            rows="6"
+            readonly
+          >
+{{ posts.content }}</textarea
+          >
+        </div>
+        <div class="mb-3">
+          <label for="img_file" class="form-label">Image File</label>
+          <input
+            type="text"
+            class="form-control"
+            id="img_file"
+            name="img_file"
+            value="{{ posts.img_file }}"
+            readonly
+          />
+          <img
+            id="clickable-image"
+            src="/static/assets/img/{{posts.img_file}}"
+            alt="Image"
+            class="clickable-image w-100"
+            data-toggle="modal"
+            data-target="#modal-image"
+          />
+        </div>
+        <div id="image-modal" class="modal">
+          <span class="close" id="close-modal">&times;</span>
+          <div class="modal-content">
+            <img id="modal-image" src="" alt="Image" />
+          </div>
+        </div>
+
+        <button type="submit" name="approve" class="btn btn-success">
+          Approve
+        </button>
+        <button
+          type="submit"
+          name="delete"
+          class="btn btn-danger"
+          id="delete-btn"
+        >
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

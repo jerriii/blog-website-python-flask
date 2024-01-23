@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>{{ parameters['blog_name'] }}</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='assets/favicon.ico') }}"
+    />
+    <link
+      href="{{ url_for('static', filename='css/styles.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Font Awesome icons (free version)-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="static/css/image.css" />
+    <!-- <style>
+      /* Add your CSS styles and other head elements here */
+
+      /* Position the search bar container relative */
+      .search-container {
+        position: relative;
+      }
+
+      /* Style the search input */
+      .search-container input[name="query"] {
+        width: 200px;
+        padding: 5px;
+      }
+
+      /* Style the search dropdown */
+      .search-dropdown {
+        position: absolute;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        max-height: 200px;
+        overflow: hidden;
+        z-index: 1;
+        display: none;
+      }
+
+      /* Style the dropdown links */
+      .search-dropdown a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #333;
+      }
+
+      /* Style the dropdown links on hover */
+      .search-dropdown a:hover {
+        background-color: #f2f2f2;
+      }
+
+      /* Show the dropdown when the input is focused */
+      .search-query:focus + .search-dropdown,
+      .search-dropdown:has(> a:hover) {
+        display: block;
+      }
+
+      unselectable {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    </style> -->
+  </head>
+  <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">{{ parameters['blog_name'] }}</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ms-auto py-4 py-lg-0">
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a>
+            </li>
+            {% if current_user %}
+            <!-- Display "Add Post" link for logged-in users -->
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="/user_post"
+                >Add Post</a
+              >
+            </li>
+            <!-- Display profile link and dropdown for logged-in users -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user"></i> {{ current_user.username }}
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <a class="dropdown-item" href="/profile">Profile</a>
+                <a class="dropdown-item" href="/user_logout">Logout</a>
+              </div>
+            </li>
+            {% else %}
+            <!-- Display login link for users not logged in -->
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="/user_login"
+                >Login</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- body goes here -->
+    {% block body %}{% endblock %}
+
+    <!-- Footer-->
+    <footer class="border-top">
+      <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="{{ parameters['tw_url'] }}" target="_blank">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="{{ parameters['fb_url'] }}" target="_blank">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="{{ parameters['gh_url'] }}" target="_blank">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <div class="small text-center text-muted fst-italic">
+              Copyright &copy; {{ parameters['blog_name']}} 2023
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+    <script>
+      let rating = 0;
+
+      function setRating(stars) {
+        rating = stars;
+        updateStarsAppearance(rating);
+        updateCommentBox(rating);
+      }
+
+      function updateStarsAppearance() {
+        const starElements = document.querySelectorAll("#ratingStars span");
+        starElements.forEach((star, index) => {
+          if (index < rating) {
+            star.className = "fa-solid fa-star";
+          } else {
+            star.className = "fa-regular fa-star";
+          }
+        });
+      }
+
+      function updateCommentBox(rating) {
+        const commentBox = document.querySelector(
+          "#commentBoxContainer textarea"
+        );
+        const submitButton = document.querySelector(
+          "#commentBoxContainer button"
+        );
+
+        if (commentBox && submitButton) {
+          // Check if elements exist
+          if (rating > 0) {
+            commentBox.disabled = false;
+            submitButton.disabled = false;
+          } else {
+            commentBox.disabled = true;
+            submitButton.disabled = true;
+          }
+        }
+      }
+
+      function getCSRFToken() {
+        const csrfTokenInput = document.querySelector(
+          'input[name="csrf_token"]'
+        );
+        if (csrfTokenInput) {
+          return csrfTokenInput.value;
+        } else {
+          console.error("CSRF token input not found.");
+          return null;
+        }
+      }
+
+      function submitRatingComment() {
+        const csrfToken = getCSRFToken();
+        if (!csrfToken) {
+          return;
+        }
+        const commentBox = document.querySelector(
+          "#commentBoxContainer textarea"
+        );
+        const comment = commentBox.value.trim();
+        const user_id = document.getElementById("user-id").value;
+        const post_id = document.getElementById("post-id").value;
+
+        if (rating > 0 && comment !== "") {
+          const requestData = {
+            post_id: post_id,
+            user_id: user_id,
+            rating: rating,
+            comment: comment,
+          };
+
+          fetch("/submit_rating_comment", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCSRFToken(), // You may need to adjust the CSRF token retrieval method
+            },
+            body: JSON.stringify(requestData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              rating = 0;
+              updateStarsAppearance();
+              commentBox.value = "";
+              updateCommentBox(rating);
+            })
+            .catch((error) => {
+              // Handle errors, e.g., show an error message
+              console.error("Error submitting rating and comment:", error);
+            });
+        } else {
+          // Handle case where rating or comment is missing
+          console.log("Please provide a rating and comment.");
+        }
+      }
+
+      function generateSlug() {
+        var title = document.getElementById("title").value;
+        var slug = title.toLowerCase().replace(/\s+/g, "-");
+        document.getElementById("slug").value = slug;
+      }
+      document.getElementById("title").addEventListener("input", generateSlug);
+      generateSlug();
+
+      function updateImagePreview(input) {
+        const clickableImage = document.getElementById("clickable-image");
+
+        const imgPath =
+          input.files.length > 0
+            ? URL.createObjectURL(input.files[0])
+            : "/static/assets/img/default-image.jpg";
+        clickableImage.src = imgPath;
+      }
+    </script>
+  </body>
+</html>
